@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Expression Calculator</title>
+	</head>
+	<body>
+		<h2>Expression Calculator</h2>
+		<form id="exprForm">
+			<label for="expr">Enter expression:</label>
+			<input type="text" id="expr" name="expr" placeholder="Enter expression" />
+			<button type="submit">Calculate</button>
+		</form>
+		<div id="result"></div>
+
+		<script>
+			document
+				.getElementById('exprForm')
+				.addEventListener('submit', function (event) {
+					event.preventDefault()
+
+					var expr = document.getElementById('expr').value
+					expr = encodeURIComponent(expr)
+
+					fetch('/parsingCalculator?expr=' + expr)
+						.then(response => response.text())
+						.then(result => {
+							document.getElementById('result').textContent = result
+						})
+						.catch(error => {
+							console.error('Error:', error)
+						})
+				})
+		</script>
+	</body>
+</html>
